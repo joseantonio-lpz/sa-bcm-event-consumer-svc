@@ -25,7 +25,7 @@ public class EventConsumer {
 		this.taskService = taskService;
 	}
 
-	@KafkaListener(id = "ExternalEventEntity", topics = "wfm.task_assigned", groupId = "dev.bcm_event.task_start")
+	@KafkaListener(id = "BCMEventTaskSTART", topics = "wfm.task_assigned", groupId = "dev.bcm_event.task_start")
 	public void bcmAssignUser(ConsumerRecord<String, Map<String, Object>> rec) {
 		log.info(" ➡ =============================TASK ASSIGN================================= ➡ ");
 		Map<String, Object> payload = printPayloadLogInfoFromTopic(rec);
@@ -34,7 +34,7 @@ public class EventConsumer {
 		taskService.updateFlowTask(kTaskRequest, pm, "START");
 	}
 
-	@KafkaListener(id = "ExternalEventEntity", topics = "wfm.task_completed", groupId = "dev.bcm_event.task_complete")
+	@KafkaListener(id = "BCMEventTaskCO", topics = "wfm.task_completed", groupId = "dev.bcm_event.task_complete")
 	public void bcmComplete(ConsumerRecord<String, Map<String, Object>> rec) {
 		log.info(" ➡ =============================TASK COMPLETE================================= ➡ ");
 		Map<String, Object> payload = printPayloadLogInfoFromTopic(rec);
@@ -43,7 +43,7 @@ public class EventConsumer {
 		taskService.updateFlowTask(kTaskRequest, pm, "COMPLETE");
 	}
 
-	@KafkaListener(id = "ExternalEventEntity", topics = "wfm.task_rejected", groupId = "dev.bcm_event.task_reject")
+	@KafkaListener(id = "BCMEventTaskReject", topics = "wfm.task_rejected", groupId = "dev.bcm_event.task_reject")
 	public void bcmReject(ConsumerRecord<String, Map<String, Object>> rec) {
 		log.info(" ➡ =============================TASK REJECT================================= ➡ ");
 		Map<String, Object> payload = printPayloadLogInfoFromTopic(rec);

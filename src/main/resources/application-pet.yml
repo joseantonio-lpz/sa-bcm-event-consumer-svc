@@ -14,7 +14,7 @@ spring:
         minimum-idle: 2
         idle-timeout: 30000
         max-lifetime: 1800000
-        pool-name: DEVAPPHikariCP
+        pool-name: SAQABCMConsumerHikariCP
   jpa:
     hibernate:
       ddl-auto: none
