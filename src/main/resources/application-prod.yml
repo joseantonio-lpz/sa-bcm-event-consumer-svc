@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@10.34.7.85:1523:DEVAPP
+    username: app_user
+    password: temporal
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+logging:
+  level:
+    root: INFO
+
+server:
+  error:
+    include-message: never
+    include-stacktrace: never

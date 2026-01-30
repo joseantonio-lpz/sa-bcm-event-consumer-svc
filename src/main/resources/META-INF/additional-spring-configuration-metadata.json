@@ -1,0 +1,162 @@
+{"properties": [
+  {
+    "name": "spring.datasource.oracleucp.sql-for-validate-connection",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.oracleucp.sql-for-validate-connection'"
+  },
+  {
+    "name": "global-api-properties.sql.users-by-username",
+    "type": "java.lang.String",
+    "description": "A description for 'global-api-properties.sql.users-by-username'"
+  },
+  {
+    "name": "global-api-properties.sql.authorities-by-username",
+    "type": "java.lang.String",
+    "description": "A description for 'global-api-properties.sql.authorities-by-username'"
+  },
+  {
+    "name": "spring.datasource.primary.jdbc-url",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.primary.jdbc-url'"
+  },
+  {
+    "name": "spring.datasource.primary.username",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.primary.username'"
+  },
+  {
+    "name": "spring.datasource.primary.password",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.primary.password'"
+  },
+  {
+    "name": "spring.datasource.primary.driver-class-name",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.primary.driver-class-name'"
+  },
+  {
+    "name": "spring.datasource.primary.hikari.maximum-pool-size",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.primary.hikari.maximum-pool-size'"
+  },
+  {
+    "name": "spring.datasource.primary.hikari.minimum-idle",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.primary.hikari.minimum-idle'"
+  },
+  {
+    "name": "spring.datasource.primary.hikari.idle-timeout",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.primary.hikari.idle-timeout'"
+  },
+  {
+    "name": "spring.datasource.primary.hikari.max-lifetime",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.primary.hikari.max-lifetime'"
+  },
+  {
+    "name": "spring.datasource.primary.hikari.pool-name",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.primary.hikari.pool-name'"
+  },
+  {
+    "name": "spring.datasource.secondary.jdbc-url",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.secondary.jdbc-url'"
+  },
+  {
+    "name": "spring.datasource.secondary.username",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.secondary.username'"
+  },
+  {
+    "name": "spring.datasource.secondary.password",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.secondary.password'"
+  },
+  {
+    "name": "spring.datasource.secondary.driver-class-name",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.secondary.driver-class-name'"
+  },
+  {
+    "name": "spring.datasource.secondary.hikari.maximum-pool-size",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.secondary.hikari.maximum-pool-size'"
+  },
+  {
+    "name": "spring.datasource.secondary.hikari.minimum-idle",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.secondary.hikari.minimum-idle'"
+  },
+  {
+    "name": "spring.datasource.secondary.hikari.idle-timeout",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.secondary.hikari.idle-timeout'"
+  },
+  {
+    "name": "spring.datasource.secondary.hikari.max-lifetime",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.secondary.hikari.max-lifetime'"
+  },
+  {
+    "name": "spring.datasource.secondary.hikari.pool-name",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.secondary.hikari.pool-name'"
+  },
+  {
+    "name": "api-properties.security-cors.allowed-origins",
+    "type": "java.lang.String",
+    "description": "A description for 'api-properties.security-cors.allowed-origins'"
+  },
+  {
+    "name": "api-properties.security-cors.allowed-methods",
+    "type": "java.lang.String",
+    "description": "A description for 'api-properties.security-cors.allowed-methods'"
+  },
+  {
+    "name": "api-properties.security-cors.allowed-headers",
+    "type": "java.lang.String",
+    "description": "A description for 'api-properties.security-cors.allowed-headers'"
+  },
+  {
+    "name": "api-properties.shared-management.url-base",
+    "type": "java.lang.String",
+    "description": "A description for 'api-properties.shared-management.url-base'"
+  },
+  {
+    "name": "api-properties.shared-management.url-oauth",
+    "type": "java.lang.String",
+    "description": "A description for 'api-properties.shared-management.url-oauth'"
+  },
+  {
+    "name": "api-properties.shared-management.url-token",
+    "type": "java.lang.String",
+    "description": "A description for 'api-properties.shared-management.url-token'"
+  },
+  {
+    "name": "api-properties.shared-management.username",
+    "type": "java.lang.String",
+    "description": "A description for 'api-properties.shared-management.username'"
+  },
+  {
+    "name": "api-properties.shared-management.password",
+    "type": "java.lang.String",
+    "description": "A description for 'api-properties.shared-management.password'"
+  },
+  {
+    "name": "api-properties.shared-management.system-info",
+    "type": "java.lang.String",
+    "description": "A description for 'api-properties.shared-management.system-info'"
+  },
+  {
+    "name": "api-properties.system-info",
+    "type": "java.lang.String",
+    "description": "A description for 'api-properties.system-info'"
+  },
+  {
+    "name": "api-properties.event-hub-service.social-content",
+    "type": "java.lang.String",
+    "description": "A description for 'api-properties.event-hub-service.social-content'"
+  }
+]}
