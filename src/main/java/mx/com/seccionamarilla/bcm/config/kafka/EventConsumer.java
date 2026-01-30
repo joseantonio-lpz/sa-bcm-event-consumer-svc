@@ -17,9 +17,6 @@ import mx.com.seccionamarilla.bcm.util.PayloadUtil;
 @Service
 public class EventConsumer {
 
-	private static final String STRVALUE_PRODUCT_CODE = "ProductCode";
-	private static final String STRVALUE_ENTITY_ID = "EntityId";
-	private static final String STR_SAOLBC_PRODUCT_CODE = "WAOLBC";
 	private final IProcessMessagesService processMessagesService;
 	private final ITaskService taskService;
 
@@ -34,7 +31,7 @@ public class EventConsumer {
 		Map<String, Object> payload = printPayloadLogInfoFromTopic(rec);
 		ProcessedMessage pm = insertConsumeEventLog(rec);
 		KafkaTaskRequest kTaskRequest = PayloadUtil.toKafkaTaskRequest(payload);
-		taskService.updateFlowTask(kTaskRequest, pm,"START");
+		taskService.updateFlowTask(kTaskRequest, pm, "START");
 	}
 
 	@KafkaListener(id = "ExternalEventEntity", topics = "wfm.task_completed", groupId = "dev.bcm_event.task_complete")
@@ -43,7 +40,7 @@ public class EventConsumer {
 		Map<String, Object> payload = printPayloadLogInfoFromTopic(rec);
 		ProcessedMessage pm = insertConsumeEventLog(rec);
 		KafkaTaskRequest kTaskRequest = PayloadUtil.toKafkaTaskRequest(payload);
-		taskService.updateFlowTask(kTaskRequest,pm, "COMPLETE");
+		taskService.updateFlowTask(kTaskRequest, pm, "COMPLETE");
 	}
 
 	@KafkaListener(id = "ExternalEventEntity", topics = "wfm.task_rejected", groupId = "dev.bcm_event.task_reject")
@@ -52,7 +49,7 @@ public class EventConsumer {
 		Map<String, Object> payload = printPayloadLogInfoFromTopic(rec);
 		ProcessedMessage pm = insertConsumeEventLog(rec);
 		KafkaTaskRequest kTaskRequest = PayloadUtil.toKafkaTaskRequest(payload);
-		taskService.updateFlowTask(kTaskRequest, pm,"REJECT");
+		taskService.updateFlowTask(kTaskRequest, pm, "REJECT");
 	}
 
 	/**
