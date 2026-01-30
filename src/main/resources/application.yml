@@ -1,0 +1,16 @@
+server:
+  port: 8086
+spring:
+  profiles:
+    active: pet
+  application:
+    name: bcm-event-consumer
+  datasource:
+    type: oracle.ucp.jdbc.PoolDataSource
+    oracleucp:
+      connection-factory-class-name: oracle.jdbc.pool.OracleDataSource
+      sql-for-validate-connection: select * from dual
+      connection-pool-name: UcpPoolBCMEventConsumer
+      initial-pool-size: 5
+      min-pool-size: 5
+      max-pool-size: 10
