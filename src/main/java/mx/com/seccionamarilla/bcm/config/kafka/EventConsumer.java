@@ -26,7 +26,7 @@ public class EventConsumer {
 		this.taskService = taskService;
 	}
 
-	@KafkaListener(id = "BCMEventTaskSTART", topics = "wfm.form_submit_2", groupId = "dev.bcm_event.task_start")
+	@KafkaListener(id = "BCMEventTaskSTART", topics = "wfm.task_assigned", groupId = "dev.bcm_event.task_start")
 	public void bcmAssignUser(ConsumerRecord<String, Map<String, Object>> rec) {
 		log.info(" ➡ =============================TASK ASSIGN================================= ➡ ");
 		Map<String, Object> payload = printPayloadLogInfoFromTopic(rec);
