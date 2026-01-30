@@ -29,7 +29,7 @@ import mx.com.seccionamarilla.bcm.model.entity.TaskFlowInstanceDetail;
 public class TaskDaoImpl implements ITaskDao {
 	
 	@Qualifier("primaryJdbcTemplate")
-	private JdbcTemplate primaryJdbcTemplate;
+	private final JdbcTemplate primaryJdbcTemplate;
 	private SimpleJdbcCall newFlowTask;
 	public static final String PARAM_ADN_ENTITY_ID = "pa_adn_entity_id";
 	
