@@ -27,7 +27,7 @@ public class TaskServiceImpl implements ITaskService {
 	public void updateFlowTask(KafkaTaskRequest kTaskRequest, ProcessedMessage pm, String taskStatus) {
 		TaskEntity data = new TaskEntity();
 		try {
-			String strVarProcesado = "NO_PROCESADO";
+			String strVarProcesado = "NO_ENCONTRADO";
 			TaskFlowInstanceDetail taskFlowIns = taskDao
 					.getTaskFlowInstanceDetail(Long.valueOf(kTaskRequest.getFlowInstanceId()));
 			// valida si encontro la tarea
