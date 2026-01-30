@@ -16,10 +16,8 @@ import mx.com.seccionamarilla.bcm.util.PayloadUtil;
 @Slf4j
 @Service
 public class EventConsumer {
-
-	private static final String STRVALUE_PRODUCT_CODE = "ProductCode";
-	private static final String STRVALUE_ENTITY_ID = "EntityId";
-	private static final String STR_SAOLBC_PRODUCT_CODE = "WAOLBC";
+	private static final String STR_SAOLBC_PRODUCT_CODE = "SAOLBC";
+	private static final String STR_VAR_PRODUCT_CODE = "ProductCode";
 	private final IProcessMessagesService processMessagesService;
 	private final ITaskService taskService;
 
@@ -28,31 +26,39 @@ public class EventConsumer {
 		this.taskService = taskService;
 	}
 
-	@KafkaListener(id = "ExternalEventEntity", topics = "wfm.task_assigned", groupId = "dev.bcm_event.task_start")
+	@KafkaListener(id = "BCMEventTaskSTART", topics = "wfm.task_assigned", groupId = "dev.bcm_event.task_start")
 	public void bcmAssignUser(ConsumerRecord<String, Map<String, Object>> rec) {
 		log.info(" ➡ =============================TASK ASSIGN================================= ➡ ");
 		Map<String, Object> payload = printPayloadLogInfoFromTopic(rec);
-		ProcessedMessage pm = insertConsumeEventLog(rec);
-		KafkaTaskRequest kTaskRequest = PayloadUtil.toKafkaTaskRequest(payload);
-		taskService.updateFlowTask(kTaskRequest, pm,"START");
+		if (PayloadUtil.getString(payload, STR_VAR_PRODUCT_CODE).equalsIgnoreCase(STR_SAOLBC_PRODUCT_CODE)) {
+			ProcessedMessage pm = insertConsumeEventLog(rec);
+			KafkaTaskRequest kTaskRequest = PayloadUtil.toKafkaTaskRequest(payload);
+			taskService.updateFlowTask(kTaskRequest, pm, "START");
+		}
 	}
 
-	@KafkaListener(id = "ExternalEventEntity", topics = "wfm.task_completed", groupId = "dev.bcm_event.task_complete")
+	@KafkaListener(id = "BCMEventTaskCO", topics = "wfm.task_completed", groupId = "dev.bcm_event.task_complete")
 	public void bcmComplete(ConsumerRecord<String, Map<String, Object>> rec) {
 		log.info(" ➡ =============================TASK COMPLETE================================= ➡ ");
 		Map<String, Object> payload = printPayloadLogInfoFromTopic(rec);
-		ProcessedMessage pm = insertConsumeEventLog(rec);
-		KafkaTaskRequest kTaskRequest = PayloadUtil.toKafkaTaskRequest(payload);
-		taskService.updateFlowTask(kTaskRequest,pm, "COMPLETE");
+
+		if (PayloadUtil.getString(payload, STR_VAR_PRODUCT_CODE).equalsIgnoreCase(STR_SAOLBC_PRODUCT_CODE)) {
+			ProcessedMessage pm = insertConsumeEventLog(rec);
+			KafkaTaskRequest kTaskRequest = PayloadUtil.toKafkaTaskRequest(payload);
+			taskService.updateFlowTask(kTaskRequest, pm, "COMPLETE");
+		}
+
 	}
 
-	@KafkaListener(id = "ExternalEventEntity", topics = "wfm.task_rejected", groupId = "dev.bcm_event.task_reject")
+	@KafkaListener(id = "BCMEventTaskReject", topics = "wfm.task_started", groupId = "dev.bcm_event.task_started")
 	public void bcmReject(ConsumerRecord<String, Map<String, Object>> rec) {
-		log.info(" ➡ =============================TASK REJECT================================= ➡ ");
+		log.info(" ➡ =============================TASK STARTED================================= ➡ ");
 		Map<String, Object> payload = printPayloadLogInfoFromTopic(rec);
-		ProcessedMessage pm = insertConsumeEventLog(rec);
-		KafkaTaskRequest kTaskRequest = PayloadUtil.toKafkaTaskRequest(payload);
-		taskService.updateFlowTask(kTaskRequest, pm,"REJECT");
+		if (PayloadUtil.getString(payload, STR_VAR_PRODUCT_CODE).equalsIgnoreCase(STR_SAOLBC_PRODUCT_CODE)) {
+			ProcessedMessage pm = insertConsumeEventLog(rec);
+			KafkaTaskRequest kTaskRequest = PayloadUtil.toKafkaTaskRequest(payload);
+			taskService.updateFlowTask(kTaskRequest, pm, "REJECT");
+		}
 	}
 
 	/**
