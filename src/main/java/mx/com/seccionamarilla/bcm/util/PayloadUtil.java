@@ -3,7 +3,8 @@ package mx.com.seccionamarilla.bcm.util;
 import java.util.Map;
 import java.util.Optional;
 
-import mx.com.seccionamarilla.bcm.model.dto.KafkaTaskRequest;
+import mx.com.seccionamarilla.bcm.model.dto.KafkaSubmitRequest;
+import mx.com.seccionamarilla.bcm.model.dto.KafkaWfmBcmRequest;
 
 public final class PayloadUtil {
 
@@ -17,9 +18,17 @@ public final class PayloadUtil {
 				.orElse(null);
 	}
 
-	public static KafkaTaskRequest toKafkaTaskRequest(Map<String, Object> payload) {
-		KafkaTaskRequest request = new KafkaTaskRequest();
+	public static KafkaSubmitRequest toKafkaSubmitRequest(Map<String, Object> payload) {
+		KafkaSubmitRequest request = new KafkaSubmitRequest();
+		request.setResponseId (getString(payload, "ResponseId"));
+		request.setExternalId(getString(payload, "ExternalId"));
+		request.setFormCode(getString(payload, "FormCode"));
+		request.setToken(getString(payload, "Token"));
+		return request;
+	}
 
+	public static KafkaWfmBcmRequest toKafkaWfmBcmRequest(Map<String, Object> payload) {
+		KafkaWfmBcmRequest request = new KafkaWfmBcmRequest();
 		request.setEntityId(getString(payload, "EntityId"));
 		request.setExternalId(getString(payload, "ExternalId"));
 		request.setProductCode(getString(payload, "ProductCode"));
@@ -28,7 +37,6 @@ public final class PayloadUtil {
 		request.setFlowInstanceId(getString(payload, "FlowInstanceId"));
 		request.setDate(getString(payload, "Date"));
 		request.setUserId(getString(payload, "UserId"));
-
 		return request;
 	}
 }

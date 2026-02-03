@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class KafkaTaskRequest implements Serializable {
+public class KafkaWfmBcmRequest implements Serializable {
 
 	/**
 	 * 
