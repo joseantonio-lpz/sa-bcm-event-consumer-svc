@@ -67,11 +67,11 @@ public class EventConsumer {
 	public void bcmSubmit(ConsumerRecord<String, Map<String, Object>> rec) {
 		log.info(" ➡ =============================TASK SUBMIT================================= ➡ ");
 		Map<String, Object> payload = printPayloadLogInfoFromTopic(rec);
-		if (PayloadUtil.getString(payload, STR_VAR_PRODUCT_CODE).equalsIgnoreCase(STR_SAOLBC_PRODUCT_CODE)) {
+		if (PayloadUtil.getString(payload, "FormCode").equalsIgnoreCase("FORM_ECOSISTEMA_DIGITAL")) {
 			ProcessedMessage pm = insertConsumeEventLog(rec);
 			// externalid igual al idcontrato
 			KafkaSubmitRequest kTaskRequest = PayloadUtil.toKafkaSubmitRequest(payload);
-			//bcmOlbcService.updateFlowTask(kTaskRequest, pm, "REJECT");
+			bcmOlbcService.updateBusiness(kTaskRequest, pm);
 		}
 	}
 

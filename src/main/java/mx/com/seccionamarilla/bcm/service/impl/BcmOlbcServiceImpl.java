@@ -52,16 +52,17 @@ public class BcmOlbcServiceImpl implements IBcmOlbcService {
 	@Override
 	public void updateBusiness(KafkaSubmitRequest businessRequest, ProcessedMessage pm) {
 		try {
-			BusinessResponse negocio = getBusinessVersion(Long.valueOf(businessRequest.getExternalId()));
+			BusinessResponse negocio = getBusinessVersion(businessRequest.getExternalId(), pm.getProcessedMessagesId());
 			if (negocio != null) {
-				Business negocioActivo = getActiveBusiness(negocio);
+				Business negocioActivo = getActiveBusiness(negocio, pm.getProcessedMessagesId());
 				if (negocioActivo != null) {
 					Integer versionNumber = negocioActivo.getBusinessVersionDetail().getVersionNumber();
 					updateBusinessState(businessRequest.getExternalId(), versionNumber, "READY").block();
+					processMessagesService.updateStatusOut(pm.getProcessedMessagesId(), "PROCESADO", null,
+							"BUSINESS_ID", businessRequest.getExternalId(), businessRequest.getFormCode(), null);
 				}
 			}
-			processMessagesService.updateStatusOut(pm.getProcessedMessagesId(), "PROCESADO", null, "BUSINESS_ID",
-					businessRequest.getExternalId(), businessRequest.getFormCode(), null);
+
 		} catch (Exception e) {
 			processMessagesService.updateStatusOut(pm.getProcessedMessagesId(), "ERROR", e.getMessage(), "BUSINESS_ID",
 					businessRequest.getExternalId(), businessRequest.getFormCode(), e.getLocalizedMessage());
@@ -80,20 +81,32 @@ public class BcmOlbcServiceImpl implements IBcmOlbcService {
                 .bodyToMono(Void.class);
     }
 	
-	private BusinessResponse getBusinessVersion(Long businessId) {
+	private BusinessResponse getBusinessVersion(String businessId, Long processedMessagesId) {
+		try {
 		return businessWebClient
 				.get()
 				.uri("/api/v1/businesses/{id}/version", businessId)
 				.retrieve()
 				.bodyToMono(BusinessResponse.class)
 				.block();
+		}catch(Exception e) {
+			processMessagesService.updateStatusOut(processedMessagesId, "ERROR", e.getMessage(), "BUSINESS_ID",
+					businessId, businessId, "API_BUSINESS");
+			return null;
+		}
 	}
 
-	private Business getActiveBusiness(BusinessResponse response) {
-		return response.getBusinesses()
-				.stream()
-				.filter(b -> "ACTIVE".equalsIgnoreCase(b.getBusinessStatus()))
-				.findFirst()
-				.orElse(null); // o lanza excepción si prefieres
+	private Business getActiveBusiness(BusinessResponse response, Long processedMessagesId) {
+		try {
+			return response.getBusinesses()
+					.stream()
+					.filter(b -> "ACTIVE".equalsIgnoreCase(b.getBusinessStatus()))
+					.findFirst()
+					.orElse(null); // o lanza excepción si prefieres
+		}catch(Exception e) {
+			processMessagesService.updateStatusOut(processedMessagesId, "ERROR", e.getMessage(), "BUSINESS_ID",
+					response.getBusinessId(), response.getBusinessId(), "NEGOCIO_ACTIVO");
+			return null;
+		}		
 	}
 }
