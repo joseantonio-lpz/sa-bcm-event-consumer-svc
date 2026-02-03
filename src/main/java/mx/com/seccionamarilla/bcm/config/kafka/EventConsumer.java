@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import mx.com.seccionamarilla.bcm.model.dto.KafkaTaskRequest;
 import mx.com.seccionamarilla.bcm.model.entity.ProcessedMessage;
 import mx.com.seccionamarilla.bcm.service.IProcessMessagesService;
-import mx.com.seccionamarilla.bcm.service.ITaskService;
+import mx.com.seccionamarilla.bcm.service.IBcmOlbcService;
 import mx.com.seccionamarilla.bcm.util.PayloadUtil;
 
 @Slf4j
@@ -19,11 +19,11 @@ public class EventConsumer {
 	private static final String STR_SAOLBC_PRODUCT_CODE = "SAOLBC";
 	private static final String STR_VAR_PRODUCT_CODE = "ProductCode";
 	private final IProcessMessagesService processMessagesService;
-	private final ITaskService taskService;
+	private final IBcmOlbcService bcmOlbcService;
 
-	public EventConsumer(IProcessMessagesService processMessagesService, ITaskService taskService) {
+	public EventConsumer(IProcessMessagesService processMessagesService, IBcmOlbcService bcmOlbcService) {
 		this.processMessagesService = processMessagesService;
-		this.taskService = taskService;
+		this.bcmOlbcService = bcmOlbcService;
 	}
 
 	@KafkaListener(id = "BCMEventTaskSTART", topics = "wfm.task_assigned", groupId = "dev.bcm_event.task_start")
@@ -33,7 +33,7 @@ public class EventConsumer {
 		if (PayloadUtil.getString(payload, STR_VAR_PRODUCT_CODE).equalsIgnoreCase(STR_SAOLBC_PRODUCT_CODE)) {
 			ProcessedMessage pm = insertConsumeEventLog(rec);
 			KafkaTaskRequest kTaskRequest = PayloadUtil.toKafkaTaskRequest(payload);
-			taskService.updateFlowTask(kTaskRequest, pm, "START");
+			bcmOlbcService.updateFlowTask(kTaskRequest, pm, "START");
 		}
 	}
 
@@ -45,7 +45,7 @@ public class EventConsumer {
 		if (PayloadUtil.getString(payload, STR_VAR_PRODUCT_CODE).equalsIgnoreCase(STR_SAOLBC_PRODUCT_CODE)) {
 			ProcessedMessage pm = insertConsumeEventLog(rec);
 			KafkaTaskRequest kTaskRequest = PayloadUtil.toKafkaTaskRequest(payload);
-			taskService.updateFlowTask(kTaskRequest, pm, "COMPLETE");
+			bcmOlbcService.updateFlowTask(kTaskRequest, pm, "COMPLETE");
 		}
 
 	}
@@ -56,8 +56,9 @@ public class EventConsumer {
 		Map<String, Object> payload = printPayloadLogInfoFromTopic(rec);
 		if (PayloadUtil.getString(payload, STR_VAR_PRODUCT_CODE).equalsIgnoreCase(STR_SAOLBC_PRODUCT_CODE)) {
 			ProcessedMessage pm = insertConsumeEventLog(rec);
+			// externalid igual al idcontrato
 			KafkaTaskRequest kTaskRequest = PayloadUtil.toKafkaTaskRequest(payload);
-			taskService.updateFlowTask(kTaskRequest, pm, "REJECT");
+			bcmOlbcService.updateFlowTask(kTaskRequest, pm, "REJECT");
 		}
 	}
 
