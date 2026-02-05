@@ -34,7 +34,7 @@ public class EventConsumer {
 		if (PayloadUtil.getString(payload, STR_VAR_PRODUCT_CODE).equalsIgnoreCase(STR_SAOLBC_PRODUCT_CODE)) {
 			ProcessedMessage pm = insertConsumeEventLog(rec);
 			KafkaWfmBcmRequest kTaskRequest = PayloadUtil.toKafkaWfmBcmRequest(payload);
-			bcmOlbcService.updateFlowTask(kTaskRequest, pm, "START");
+			bcmOlbcService.updateBusinessStatus(kTaskRequest, pm, "LOCKED");
 		}
 	}
 
@@ -46,7 +46,7 @@ public class EventConsumer {
 		if (PayloadUtil.getString(payload, STR_VAR_PRODUCT_CODE).equalsIgnoreCase(STR_SAOLBC_PRODUCT_CODE)) {
 			ProcessedMessage pm = insertConsumeEventLog(rec);
 			KafkaWfmBcmRequest kTaskRequest = PayloadUtil.toKafkaWfmBcmRequest(payload);
-			bcmOlbcService.updateFlowTask(kTaskRequest, pm, "COMPLETE");
+			bcmOlbcService.updateBusinessStatus(kTaskRequest, pm, "READY");
 		}
 
 	}
@@ -59,7 +59,7 @@ public class EventConsumer {
 			ProcessedMessage pm = insertConsumeEventLog(rec);
 			// externalid igual al idcontrato
 			KafkaWfmBcmRequest kTaskRequest = PayloadUtil.toKafkaWfmBcmRequest(payload);
-			bcmOlbcService.updateFlowTask(kTaskRequest, pm, "REJECT");
+			bcmOlbcService.updateBusinessStatus(kTaskRequest, pm, "CONTENT_IN_CREATION");
 		}
 	}
 

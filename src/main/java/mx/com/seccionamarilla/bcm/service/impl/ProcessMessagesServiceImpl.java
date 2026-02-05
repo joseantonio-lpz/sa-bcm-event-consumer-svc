@@ -30,12 +30,12 @@ public class ProcessMessagesServiceImpl implements IProcessMessagesService {
 
 	@Override
 	public int updateStatusOut(Long id, String statusOut, String errorOut, String msgId, String msgValue,
-			String msgCode,String msgOut) {
+			String msgCode, String msgOut) {
 		try {
 			String error = null;
 			if (errorOut != null && errorOut.length() > 1000) {
 				error = errorOut.substring(0, 1000);
-			}else {
+			} else {
 				error = errorOut;
 			}
 			return processedMessageDao.updateStatusOut(id, statusOut, error, msgId, msgValue, msgCode, msgOut);
@@ -43,5 +43,16 @@ public class ProcessMessagesServiceImpl implements IProcessMessagesService {
 			log.error("error update sevice log  {} ", e.getLocalizedMessage());
 			throw new InternalServiceException("error update sevice log", e);
 		}
+	}
+
+	@Override
+	public void insertCompleto(ProcessedMessage pm, Long id) {
+		try {
+			processedMessageDao.insertCompleto(pm, id);
+		} catch (Exception e) {
+			log.error("error insert completo sevice log  {} ", e.getLocalizedMessage());
+			throw new InternalServiceException("error insert sevice log", e);
+		}
+
 	}
 }

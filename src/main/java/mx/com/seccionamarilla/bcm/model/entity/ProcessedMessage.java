@@ -16,6 +16,7 @@ public class ProcessedMessage {
     private String msgIdValue;
     private String msgCode;
     private String errorOut;
+    private String msgOut;
     private Timestamp createdAt;
     private Timestamp processedAt;
 }
