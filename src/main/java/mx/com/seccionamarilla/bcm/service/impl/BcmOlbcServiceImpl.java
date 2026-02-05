@@ -91,7 +91,7 @@ public class BcmOlbcServiceImpl implements IBcmOlbcService {
 				Business negocioActivo = getActiveBusiness(negocio, pm.getProcessedMessagesId());
 				if (negocioActivo != null) {
 					Integer versionNumber = negocioActivo.getBusinessVersionDetail().getVersionNumber();
-					String respuestaCorrecta = updateBusinessState(businessRequest.getExternalId(), versionNumber, "READY", pm.getProcessedMessagesId(), null);
+					String respuestaCorrecta = updateBusinessState(businessRequest.getExternalId(), versionNumber, "READY");
 					processMessagesService.updateStatusOut(pm.getProcessedMessagesId(), "PROCESADO", null,
 							"BUSINESS_ID", businessRequest.getExternalId(), businessRequest.getFormCode(), respuestaCorrecta);
 				}
@@ -110,6 +110,20 @@ public class BcmOlbcServiceImpl implements IBcmOlbcService {
 	            .retrieve()
 	            .bodyToMono(LoginByTokenResponse.class);
 	}
+	
+
+	private String updateBusinessState(
+            String businessId,
+            Integer versionNumber,
+            String state) {
+        return businessWebClient
+                .method(HttpMethod.PATCH)
+                .uri("/api/v1/businesses/{businessId}/VersionNumber/{versionNumber}/state/{state}",
+                        businessId, versionNumber, state)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+    }
 	
 	private String updateBusinessState(
             String businessId,
